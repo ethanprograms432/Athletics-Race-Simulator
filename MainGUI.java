@@ -4,6 +4,8 @@ import java.awt.event.*;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
+import javax.imageio.*;
+import java.awt.image.*;
 
 public class MainGUI extends JPanel {
 
@@ -11,6 +13,8 @@ public class MainGUI extends JPanel {
    JButton start,instructions,confirm,back;
    JTextField answer;
    JPanel mainScreen,instructionScreen,infoEntryScreen,participantEntryScreen;
+   
+   BufferedImage backgroundImage;
    
    JLabel[] participants = {new JLabel(),new JLabel(),new JLabel(),new JLabel(),new JLabel(),new JLabel(),
    new JLabel(),new JLabel(),new JLabel(),new JLabel()};
@@ -28,25 +32,34 @@ public class MainGUI extends JPanel {
 
    public MainGUI() {
    
-      this.setPreferredSize(new Dimension(800,800));
+      try {
+      
+         backgroundImage = ImageIO.read(new File("trackfield_2024_106-1600x900.jpg"));
+      
+      } catch(IOException e) {
+      
+         e.printStackTrace();
+      }
+      
+      this.setPreferredSize(new Dimension(1000,800));
       this.setBackground(Color.white);
       
       title = new JLabel("Athletics Race Simulator");
       title.setHorizontalAlignment(SwingConstants.CENTER);
-      title.setPreferredSize(new Dimension(400,150));
+      title.setPreferredSize(new Dimension(200,225));
       question = new JLabel("");
       
       answer = new JTextField(5);
       
       start = new JButton("Start");
-      start.setBackground(Color.green);
-      start.setPreferredSize(new Dimension(400,225));
+      start.setBackground(Color.getHSBColor(0.33f,0.45f,0.73f));
+      start.setPreferredSize(new Dimension(200,225));
       start.setOpaque(true);
       start.addActionListener(bL);
       
       instructions = new JButton("Instructions");
-      instructions.setBackground(Color.yellow);
-      instructions.setPreferredSize(new Dimension(400,225));
+      instructions.setBackground(Color.getHSBColor(0.15f,0.4f,0.95f));
+      instructions.setPreferredSize(new Dimension(200,225));
       instructions.setOpaque(true);
       instructions.addActionListener(bL);
       
@@ -61,10 +74,11 @@ public class MainGUI extends JPanel {
       confirm.addActionListener(bL);
       
       mainScreen = new JPanel();
+      
       mainScreen.setLayout(new GridLayout(3,1));
       
       instructionScreen = new JPanel();
-      instructionScreen.setLayout(new GridLayout(20,1));
+      instructionScreen.setLayout(new GridLayout(25,1));
       setUpInstructions();
       instructionScreen.add(back);
       
@@ -92,6 +106,17 @@ public class MainGUI extends JPanel {
       manageStages();
       
    
+   }
+   
+   @Override
+   public void paintComponent(Graphics g) {
+         
+       super.paintComponent(g);
+       if (backgroundImage != null) {
+            
+          g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+       }
+            
    }
    
    public void setUpInstructions() {
@@ -204,15 +229,15 @@ public class MainGUI extends JPanel {
             
                mainScreen.setVisible(false);
                infoEntryScreen.setVisible(true);
-               question.setText("Race Distance");
+               question.setText("Race Distance (meters)");
             
             } else if(subStage == 2) {
             
-               question.setText("How many participants?");
+               question.setText("How many participants will be racing?");
                
             } else if(subStage == 3) {
             
-               question.setText("How much would you like the race sped up?");
+               question.setText("How much would you like the race sped up? (i.e 5 for 5x speed)");
                
             }
             break;
@@ -231,15 +256,15 @@ public class MainGUI extends JPanel {
                participantEntryScreen.add(new JLabel("INFO"));
                participantEntryScreen.add(new JLabel("Name"));
                participantEntryScreen.add(new JLabel("Time"));
-               participantEntryScreen.add(new JLabel("Kick Rating"));
-               participantEntryScreen.add(new JLabel("Experience Rating"));
+               participantEntryScreen.add(new JLabel("Kick Rating (1-10)"));
+               participantEntryScreen.add(new JLabel("Experience Rating (1-10)"));
                
             } else {
             
                participantEntryScreen.add(new JLabel("INFO"));
                participantEntryScreen.add(new JLabel("Name"));
                participantEntryScreen.add(new JLabel("Time"));
-               participantEntryScreen.add(new JLabel("Start Score"));
+               participantEntryScreen.add(new JLabel("Start Rating (1-10)"));
                participantEntryScreen.add(new JLabel(""));
             
             }
@@ -278,15 +303,19 @@ public class MainGUI extends JPanel {
                         
                            subStage++;
                            
+                        } else {
+                        
+                           JOptionPane.showMessageDialog(null,"Please enter a positive number!");
                         }
                            
-                     } catch(InputMismatchException e) {
-                     
-                     
                      } catch(NoSuchElementException e) {
                      
+                        JOptionPane.showMessageDialog(null,"Please fill out all fields!");
+                        
+                     } catch(NumberFormatException n) {
                      
-                     } catch(NumberFormatException n) {}
+                        JOptionPane.showMessageDialog(null,"Please enter an integer");
+                     }
                      
                      answer.setText("");
                      //subStage++;
@@ -303,13 +332,19 @@ public class MainGUI extends JPanel {
                         
                            subStage++;
                            
+                        } else {
+                        
+                           JOptionPane.showMessageDialog(null,"Please enter a positive number!");
                         }
                         
-                     } catch(InputMismatchException e) {
-                     
                      } catch(NoSuchElementException e) {
                      
-                     } catch(NumberFormatException n) {}
+                        JOptionPane.showMessageDialog(null,"Please fill out all fields!");
+                        
+                     } catch(NumberFormatException n) {
+                     
+                        JOptionPane.showMessageDialog(null,"Please enter an integer");
+                     }
                                          
                      answer.setText("");
                      
@@ -328,13 +363,19 @@ public class MainGUI extends JPanel {
                            stage = 3;
                            subStage = 1;
                            
+                        } else {
+                        
+                           JOptionPane.showMessageDialog(null,"Please enter a positive number!");
                         }
                         
-                     } catch(InputMismatchException e) {
-                     
                      } catch(NoSuchElementException e) {
                      
-                     } catch(NumberFormatException n) {}
+                        JOptionPane.showMessageDialog(null,"Please fill out all fields!");
+                        
+                     } catch(NumberFormatException n) {
+                     
+                        JOptionPane.showMessageDialog(null,"Please enter an integer");
+                     }
                      
                      answer.setText("");
                      
@@ -557,26 +598,26 @@ public class MainGUI extends JPanel {
                   
                   if(validTime == false) {
                   
+                     JOptionPane.showMessageDialog(null,"One of the times entered is invalid\nRemember time format is in HH:MM:SS.XX");
                      isOk = false;
                      
                   }
                   
                   if(experienceScore < 1 || kickScore < 1 || experienceScore > 10 || kickScore > 10) {
                   
+                     JOptionPane.showMessageDialog(null,"One of the experience or kick scores is out of range!");
                      isOk = false;
                   
                   }
                
-               } catch(InputMismatchException e) {
+               }  catch(NoSuchElementException e) {
                
-                  isOk = false;
-               
-               } catch(NoSuchElementException e) {
-               
+                  JOptionPane.showMessageDialog(null,"Please fill out all fields!");
                   isOk = false;
                
                } catch(NumberFormatException n) {
                
+                  JOptionPane.showMessageDialog(null,"Experiences and kick scores must be integers!");
                   isOk = false;
                   
                }
@@ -591,26 +632,26 @@ public class MainGUI extends JPanel {
                   
                   if(validTime == false) {
                   
+                     JOptionPane.showMessageDialog(null,"One of the times entered is invalid\nRemember time format is in SS.XX");
                      isOk = false;
                      
                   }
                   
                   if(startScore < 1 || startScore > 10) {
                   
+                     JOptionPane.showMessageDialog(null,"One of the start scores is out of range!");
                      isOk = false;
                   
                   }
                
-               } catch(InputMismatchException e) {
-               
-                  isOk = false;
-               
                } catch(NoSuchElementException e) {
                
+                  JOptionPane.showMessageDialog(null,"Please fill out all fields!");
                   isOk = false;
                
                } catch(NumberFormatException n) {
                
+                  JOptionPane.showMessageDialog(null,"Start scores must be integers!");
                   isOk = false;
                   
                }
@@ -642,26 +683,26 @@ public class MainGUI extends JPanel {
                   boolean validTime = checkTime(times[i].getText());
                   if(validTime == false) {
                   
+                     JOptionPane.showMessageDialog(null,"One of the times entered is invalid!\nRemember time format is in HH:MM:SS.XX");
                      isOk = false;
                      
                   }
                   
                   if(experienceScore < 1 || kickScore < 1 || experienceScore > 10 || kickScore > 10) {
                   
+                     JOptionPane.showMessageDialog(null,"One of the experience or kick scores is out of range!");
                      isOk = false;
                   
                   }
                
-               } catch(InputMismatchException e) {
-               
-                  isOk = false;
-               
                } catch(NoSuchElementException e) {
                
+                  JOptionPane.showMessageDialog(null,"Please fill out all fields!");
                   isOk = false;
                
                } catch(NumberFormatException n) {
                
+                  JOptionPane.showMessageDialog(null,"Experience and kick scores must be integers!");
                   isOk = false;
                   
                }
@@ -676,26 +717,26 @@ public class MainGUI extends JPanel {
                   
                   if(validTime == false) {
                   
+                     JOptionPane.showMessageDialog(null,"One of the times entered is invalid\nRemember time format is in SS.XX");
                      isOk = false;
                      
                   }
                   
                   if(startScore < 1 || startScore > 10) {
                   
+                     JOptionPane.showMessageDialog(null,"One of the start scores is out of range!");
                      isOk = false;
                   
                   }
                
-               } catch(InputMismatchException e) {
-               
-                  isOk = false;
-               
                } catch(NoSuchElementException e) {
                
+                  JOptionPane.showMessageDialog(null,"Please fill out all fields!");
                   isOk = false;
                
                } catch(NumberFormatException n) {
                
+                  JOptionPane.showMessageDialog(null,"Start scores must be integers!");
                   isOk = false;
                   
                }

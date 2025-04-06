@@ -1,15 +1,16 @@
-                             INSTRUCTIONS
+                                                         INSTRUCTIONS
                   
-1. First you will be asked of the race distance
-2. Secondly, you will be asked for the number of participants
-in the race
-3. Any race distance is accepted, and participants will always begin
-racing at a position where they will finish on the home straight
-4. You will then be asked how much you would like the race to be sped up
-5. I.E if 2 is entered then a 30 minute race will take 15 minutes in real time
-6. For each participant you will be asked to enter their name, and time
-7. You will also rank their experience, and kick strength from a scale of 1 to 10
-8. If you entered in the 100m distance, a start score will be asked of you to 
-rate on a scale from 1 to 10 (and nothing else)
-8. Time format is I.E 27:50.49 (I.E 2:01:39 must be 121:39) (27:00 must be 27:00.00)
-9. After all participants have had their time entries a race will be ready to view
+1. Answer the questions for race distance, and number of participants
+2. Answer how much you would like the simulation to be sped up
+3. You will come across these metrics when entering participant information
+Start Score: A rating of how good a participants sprint start is from 1 to 10
+- You'll only see this when a distance of 100 is entered
+- Participants with a higher start score will accelerate faster
+Kick Score: A rating of how good a participants finishing speed is from 1 to 10
+- Participants with a higher kick score will finish faster
+Experience Score: A rating of how much experience the participant has in the particular event
+- Rated from 1 to 10
+- Participants with a low experience score will start too fast, and deccelerate
+- Participants with a high experience score will run the race evenly
+Other Rules:
+- All times must be to the nearest two milliseconds (i.e 5:30.00)
